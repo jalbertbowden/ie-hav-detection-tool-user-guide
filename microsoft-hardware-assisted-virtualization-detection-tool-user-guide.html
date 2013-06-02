@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <title>Microsoft® HAV (Hardware&#45;Assisted Virtualization) Detection Tool User Guide</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
+    <link type="text/css" rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="content">
+      <header role="banner"></header>
+      <div class="main" role="main">
+        <article role="article">
+          <section role="region">
+            <h1>Microsoft® <abbr title="Hardware&#45;Assisted Virtualization">hav</abbr> (Hardware&#45;Assisted Virtualization) Detection Tool User Guide</h1>
+            <h2>Introduction</h2>
+            <p>Windows Virtual PC requires processors with the Intel VT, AMD-V or VIA VT feature. Furthermore, the processor should have the virtualization setting enabled.</p>
+            <p>The Hardware&#45;assisted virtualization detection tool (<abbr>hav</abbr> detection tool) helps you check if your computer processor supports <abbr>hav</abbr>.  The tool also checks if this setting is enabled for the processor.</p>
+            <p>This document serves as a user guide for this tool.</p>
+            <h2>Installation</h2>
+            <ul>
+              <li>You can download the <strong><abbr>hav</abbr></strong> detection tool  from http://go.microsoft.com/fwlink/?LinkId=163321</li>
+              <li>Download this tool (havdetectiontool.exe) to your local machine and save it to say c:\havtool</li>
+              <li>Double click on the executable and follow the prompts to display the result.</li>
+            </ul>
+            <p><strong>Note</strong>: You need administrator privileges to run this tool.</p>
+            <p><strong>Note</strong>: The tool is a self-extracting executable and does not install any folders or files.  Rerun the executable if required.  The tool deletes all the installed files on exit.</p>
+            <h2>Supported Operating Systems</h2>
+            <p>The <strong><abbr>hav</abbr></strong> detection tool ONLY supports the following operating systems and editions/versions:</p>
+            <ul>
+              <li>Windows Vista Service Pack 1, 2 (Home Basic, Home Premium, Business, Enterprise, Ultimate)</li>
+              <li>Windows XP Service Pack 3 (Professional), Windows XP Service Pack 2 (Professional)</li>
+              <li>Windows 7 (Home Basic, Home Premium, Professional, Enterprise, Ultimate).</li>
+            </ul>
+            <p>On any operating system/edition/version outside of this list, the tool exits with the following error message:</p>
+            <img src="" alt="" />
+            <h2>Interpreting results of the <abbr>hav</abbr> Detection Tool:</h2>
+            <p>This section describes the results, which the <strong><abbr>hav</abbr></strong> detection tool displays.</p>
+            <ol>
+              <li><p>a)      If you have a computer that does not have a <strong><abbr>hav</abbr></strong> capable processor, the tool displays the following result:</p>
+                <img src="" alt="" /><p>You cannot use Windows Virtual PC or Windows XP Mode on this computer.</p></li>
+              <li><p>b)      If you have a computer that has a <strong><abbr>hav</abbr></strong> capable processor but if this feature (<strong><abbr>hav</abbr></strong> setting) is not enabled on the processor (in the BIOS), the following screen is shown:</p>
+                <img src="" alt="" /><p>You would need to enable the virtualization setting in the BIOS (click here to learn more) for this computer before using Windows Virtual PC or Windows XP Mode on a supported Windows®7 edition.</p></li>
+              <li><p>c)       If you have a computer that has a <strong><abbr>hav</abbr></strong> capable processor and if this feature (<strong><abbr>hav</abbr></strong> setting) is enabled on the processor (from the BIOS), the following screen is shown:
+                <img src="" alt="" /><p>You can use Windows Virtual PC or Windows XP Mode on a supported Windows® 7 edition on this computer.</p></li>
+              <li><p>d)      If you have a machine which has Intel® Trusted Execution Technology (Intel® TXT) enabled and *if* that setting interfers with the virtualization setting of your processor, then the following screen is shown:
+                <img src="" alt="" /><p>You would need to disable Intel® TXT before using Windows Virtual PC or Windows XP Mode on a supported Windows® 7 edition on this computer.</p></li>
+              </ul>
+              <h2>Collecting Data</h2>
+              <p>With your *explicit approval*, system configuration data collected by the <strong><abbr>hav</abbr></strong> detection tool will be sent to Microsoft.</p>
+              <p>If you choose ‘Yes, I would like to send data to Microsoft’ in any of the screens above, data will be sent to Microsoft.  You can find the Privacy Statement for the <strong><abbr>hav</abbr></strong> detection tool here: http://go.microsoft.com/fwlink/?LinkId=164031</p>
+              <h2>Command line options</h2>
+              <ul>
+                <li>Copy havdetectiontool.exe to a local folder (say c:\HAVTool)</li>
+                <li><p>From an elevated command prompt, run the following command to extract the files:</p>
+                  <pre><code>c:\havtool\havdetectiontool.exe /x</code></pre>
+                  <p>This displays a prompt to choose the directory for the extracting the files.</p>
+                  <img src="" alt="Choose Directory for Extracted Files Alert Prompt (Windows)" /></li>
+                <li>Choose to extract the files to c:\HAVTool</li>
+              </ul>
+              <h2>Help Options:</h2>
+              <p>To display the errorlevels returned by this tool, run one of the following commands from an elevated command prompt based on your OS architecture (from the extracted folder as described above):</p>
+<pre><code>
+c:\HAVTool\sources\i386\havtool.exe  /? 
+</pre></code>
+              <p>or</p>
+<pre><code>
+c:\HAVTool\sources\amd64\havtool.exe /?
+</pre></code>
+              <img src="" alt="Hardware&#45;Assisted Virtualization (HAV) Help &#45; Screenshot" />
+              <h2>Quite Mode:</h2>
+              <p>Create a script which executes the tool in quite mode - a snippet is shown below:</p>
+<pre><code>
+64 bit:
+
+                ....
+
+                                set errorlevel=
+
+                                C:\HAVTool\sources\amd64\havtool.exe /q
+
+                                echo %ERRORLEVEL%
+
+                ....
+
+ 
+
+ 
+
+
+ 
+32 bit:
+
+                ....
+
+                                set errorlevel=
+
+                                C:\HAVTool\sources\i386\havtool.exe /q
+
+                                echo %ERRORLEVEL%
+
+                ....
+</pre></code>
+              <p><strong>Note</strong>: Launch the script from an elevated prompt.</p>
+              <h2>Log Option:</h2>
+              <p>To generate richer logs, based on your OS architecture, run one of the following commands from an elevated command prompt:</p>
+<pre><code>
+c:\HAVTool\sources\i386\havtool.exe  /log %temp%\HAV.txt
+</pre></code>
+              <p>or</p>
+<pre><code>
+c:\HAVTool\sources\amd64\havtool.exe /log %temp%\HAV.txt
+</pre></code>
+              <p>The <strong><abbr>hav</abbr></strong> setting of your processor is displayed and a detailed file containing richer information is generated (in the above case, in %temp%\HAV.txt)</p>
+          </section>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>
